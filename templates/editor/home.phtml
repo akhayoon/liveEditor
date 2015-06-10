@@ -1,0 +1,82 @@
+{% extends "base.phtml" %}
+
+	{% block css %}
+		<style type="text/css" media="screen">
+		    #editorHTML { 
+		        position: absolute;
+		        top: 0;
+		        right: 0;
+		        bottom: 50%;
+		        left: 11%;
+		    }
+		    
+		    #editorCSS { 
+		        position: absolute;
+		        top: 50%;
+		        right: 0;
+		        bottom: 0;
+		        left: 11%;
+		        margin:0
+	    	}
+	    	
+	    	h2 {
+        		font-family: 'Play', sans-serif;
+      		}
+      		
+		</style>
+	{% endblock %}
+	
+	{% block content %}
+	<div ng-controller="dataController">
+		<div style="position: absolute; top: 0">
+			<h2>HTML</h3> 
+		</div>
+		
+		<div style="position: absolute; top:50%"> 
+			<h2>CSS</h3> 
+		</div>
+		
+			<button type="button" onclick="getData()" ng-click="save()" style="position: absolute; bottom:10%">
+				<img src="http://i.imgur.com/0wFW7Rk.png" style="width: 100px; height: 50px;">
+			</button>
+			
+			<button type="button" onclick="getData()" ng-click="save(1)" style="position: absolute; bottom:0%" >
+				<img src="http://i.imgur.com/opCfSE2.png" style="width: 100px; height: 50px;">
+			</button>		
+
+
+		
+		
+		<div id="editorHTML">
+		 {{html}}
+		</div>
+		
+		
+		<div id="editorCSS">
+		{{css}}
+		</div>
+
+	</div>
+	{% endblock %}
+
+	{% block javascript %}
+		<script src="/static/js/data.js"></script>
+		<script>
+			var editorHTML = ace.edit("editorHTML");
+			editorHTML.setTheme("ace/theme/eclipse");
+			editorHTML.getSession().setMode("ace/mode/html");
+		    
+			var editorCSS = ace.edit("editorCSS");
+			editorCSS.setTheme("ace/theme/terminal");
+			editorCSS.getSession().setMode("ace/mode/css");
+			editorCSS.$blockScrolling = Infinity;
+		
+			
+			function getData(){
+				 window.html = editorHTML.getValue();
+				 window.css  = editorCSS.getValue();
+			}
+		
+		
+		</script>
+	{% endblock %}
