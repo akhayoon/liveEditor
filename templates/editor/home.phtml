@@ -1,29 +1,7 @@
 {% extends "base.phtml" %}
 
 	{% block css %}
-		<style type="text/css" media="screen">
-		    #editorHTML { 
-		        position: absolute;
-		        top: 0;
-		        right: 0;
-		        bottom: 50%;
-		        left: 11%;
-		    }
-		    
-		    #editorCSS { 
-		        position: absolute;
-		        top: 50%;
-		        right: 0;
-		        bottom: 0;
-		        left: 11%;
-		        margin:0
-	    	}
-	    	
-	    	h2 {
-        		font-family: 'Play', sans-serif;
-      		}
-      		
-		</style>
+		<link rel="stylesheet" type="text/css" href="/static/css/home.css">
 	{% endblock %}
 	
 	{% block content %}
@@ -36,17 +14,20 @@
 			<h2>CSS</h3> 
 		</div>
 		
-			<button type="button" onclick="getData()" ng-click="save()" style="position: absolute; bottom:10%">
-				<img src="http://i.imgur.com/0wFW7Rk.png" style="width: 100px; height: 50px;">
-			</button>
-			
-			<button type="button" onclick="getData()" ng-click="save(1)" style="position: absolute; bottom:0%" >
-				<img src="http://i.imgur.com/opCfSE2.png" style="width: 100px; height: 50px;">
-			</button>		
+		
+		<div ng-model="message" ng-show="showMessage" class="message fadein fadeout"style="position: absolute; bottom: 14%;">
+			<h3>Saved</h3>
+		</div>
+		
+		<button type="button" onclick="getData()" ng-click="save()" style="bottom:9%; !important">
+			<img src="http://i.imgur.com/0wFW7Rk.png" style="width: 131px; height: 40px;">
+		</button>
+		
+		<button type="button" onclick="getData()" ng-click="save(1)">
+			<img src="http://i.imgur.com/opCfSE2.png" style="width: 131px; height: 40px;">
+		</button>		
 
 
-		
-		
 		<div id="editorHTML">
 		 {{html}}
 		</div>
@@ -62,21 +43,27 @@
 	{% block javascript %}
 		<script src="/static/js/data.js"></script>
 		<script>
+			// we declare and initialize our ace.js editor forms.
+			
+			// this is the initialization of the HTML editor
+			// the theme and mode is also initialize
 			var editorHTML = ace.edit("editorHTML");
 			editorHTML.setTheme("ace/theme/eclipse");
 			editorHTML.getSession().setMode("ace/mode/html");
 		    
+			// this is the initialization of the CSS editor 
 			var editorCSS = ace.edit("editorCSS");
 			editorCSS.setTheme("ace/theme/terminal");
 			editorCSS.getSession().setMode("ace/mode/css");
 			editorCSS.$blockScrolling = Infinity;
 		
-			
+			// this method is called when either button is clicked
+			// we place the value of what's inside the editor into the global
+			// window variable to relay it back to angularjs
 			function getData(){
 				 window.html = editorHTML.getValue();
 				 window.css  = editorCSS.getValue();
 			}
-		
 		
 		</script>
 	{% endblock %}
